@@ -42,11 +42,6 @@ public class Gradle extends Builder {
     private final String description;
 
     /**
-     * The GradleBuilder command line switches
-     */
-    private final String switches;
-
-    /**
      * The GradleBuilder tasks
      */
     private final String tasks;
@@ -64,26 +59,13 @@ public class Gradle extends Builder {
      */
     private final String gradleName;
 
-    /**
-     * Flag whether to use the gradle wrapper rather than a standard Gradle installation
-     */
-    private final boolean useWrapper;
-
     @DataBoundConstructor
-    public Gradle(String description, String switches, String tasks, String rootBuildScriptDir, String buildFile,
-                  String gradleName, boolean useWrapper) {
+    public Gradle(String description, String tasks, String rootBuildScriptDir, String buildFile, String gradleName) {
         this.description = description;
-        this.switches = switches;
         this.tasks = tasks;
         this.gradleName = gradleName;
         this.rootBuildScriptDir = rootBuildScriptDir;
         this.buildFile = buildFile;
-        this.useWrapper = !useWrapper;
-    }
-
-
-    public String getSwitches() {
-        return switches;
     }
 
     public String getBuildFile() {
@@ -100,10 +82,6 @@ public class Gradle extends Builder {
 
     public String getDescription() {
         return description;
-    }
-
-    public boolean isUseWrapper() {
-        return useWrapper;
     }
 
     public String getRootBuildScriptDir() {
