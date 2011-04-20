@@ -16,7 +16,6 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Computer;
-import hudson.model.Result;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
 import hudson.tools.ToolInstallation;
@@ -147,22 +146,19 @@ public class Gradle extends Builder {
 
         public boolean handleResult(final BuildListener listener) {
             Object result;
+
             try {
                 result = queue.take();
-
-                if (result instanceof Throwable) {
-                    final Throwable throwable = (Throwable) result;
-                    listener.error(throwable.getMessage());
-                    listener.finished(Result.FAILURE);
-                    return false;
-                } else {
-                    listener.finished(Result.SUCCESS);
-                    return true;
-                }
             } catch (InterruptedException e) {
-                listener.fatalError(e.getMessage());
-                listener.finished(Result.ABORTED);
+                result = e;
+            }
+
+            if (result instanceof Throwable) {
+                final Throwable throwable = (Throwable) result;
+                listener.error(throwable.getMessage());
                 return false;
+            } else {
+                return true;
             }
         }
 
