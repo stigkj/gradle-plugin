@@ -30,6 +30,41 @@
         </developer>
     </developers>
 
+  <dependencies>
+
+    <dependency>
+      <groupId>org.gradle</groupId>
+      <artifactId>gradle-core</artifactId>
+      <version>1.0-milestone-2</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/gradle-core-1.0-milestone-2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.gradle</groupId>
+      <artifactId>gradle-wrapper</artifactId>
+      <version>1.0-milestone-2</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/gradle-wrapper-1.0-milestone-2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.gradle</groupId>
+      <artifactId>gradle-tooling-api</artifactId>
+      <version>1.0-milestone-2</version>
+      <scope>system</scope>
+      <systemPath>${project.basedir}/gradle-tooling-api-1.0-milestone-2.jar</systemPath>
+    </dependency>
+    <dependency>
+      <groupId>org.slf4j</groupId>
+      <artifactId>slf4j-api</artifactId>
+      <version>1.6.1</version>
+    </dependency>
+    <dependency>
+      <groupId>org.spockframework</groupId>
+      <artifactId>spock-core</artifactId>
+      <version>0.5-groovy-1.7</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
     <repositories>
         <repository>
             <id>jenkins-release-repo</id>
