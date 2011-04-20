@@ -16,6 +16,7 @@ import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Computer;
+import hudson.model.Result;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.Builder;
 import hudson.tools.ToolInstallation;
@@ -26,7 +27,6 @@ import org.gradle.tooling.GradleConnector;
 import org.gradle.tooling.ProjectConnection;
 import org.gradle.tooling.ResultHandler;
 import org.gradle.tooling.model.eclipse.EclipseProject;
-import org.gradle.util.UncheckedException;
 import org.kohsuke.stapler.DataBoundConstructor;
 import org.kohsuke.stapler.StaplerRequest;
 
@@ -128,15 +128,15 @@ public class Gradle extends Builder {
 
         BuildLauncher launcher = connection.newBuild();
         final PrintStream logger = listener.getLogger();
-        final BlockingResultHandler<Void> handler = new BlockingResultHandler<Void>(Void.class);
+        final BlockingResultHandler handler = new BlockingResultHandler();
 
         launcher.forTasks(tasks.split("[ ,]")).
                 setStandardOutput(logger).setStandardError(logger).run(handler);
 
-        handler.getResult();
+        final boolean result = handler.handleResult(listener);
         connection.close();
 
-        return true;
+        return result;
     }
 
     private File gradleInstallationDir(final AbstractBuild<?, ?> build, final BuildListener listener) throws IOException, InterruptedException {
@@ -163,34 +163,33 @@ public class Gradle extends Builder {
         return new File(workspace.getRemote());
     }
 
-    public static class BlockingResultHandler<T> implements ResultHandler<T> {
+    public static class BlockingResultHandler implements ResultHandler<Void> {
         private final BlockingQueue<Object> queue = new ArrayBlockingQueue<Object>(1);
-        private final Class<T> resultType;
         private static final Object NULL = new Object();
 
-        public BlockingResultHandler(Class<T> resultType) {
-            this.resultType = resultType;
-        }
-
-        public T getResult() {
+        public boolean handleResult(final BuildListener listener) {
             Object result;
             try {
                 result = queue.take();
-            } catch (InterruptedException e) {
-                throw UncheckedException.asUncheckedException(e);
-            }
 
-            if (result instanceof Throwable) {
-                throw UncheckedException.asUncheckedException((Throwable) result);
+                if (result instanceof Throwable) {
+                    final Throwable throwable = (Throwable) result;
+                    listener.error(throwable.getMessage());
+                    listener.finished(Result.FAILURE);
+                    return false;
+                } else {
+                    listener.finished(Result.SUCCESS);
+                    return true;
+                }
+            } catch (InterruptedException e) {
+                listener.fatalError(e.getMessage());
+                listener.finished(Result.ABORTED);
+                return false;
             }
-            if (result == NULL) {
-                return null;
-            }
-            return resultType.cast(result);
         }
 
-        public void onComplete(T result) {
-            queue.add(result == null ? NULL : result);
+        public void onComplete(Void result) {
+            queue.add(NULL);
         }
 
         public void onFailure(GradleConnectionException failure) {
@@ -205,7 +204,6 @@ public class Gradle extends Builder {
 
     @Extension
     public static final class DescriptorImpl extends BuildStepDescriptor<Builder> {
-
         @CopyOnWrite
         private volatile GradleInstallation[] installations = new GradleInstallation[0];
 
