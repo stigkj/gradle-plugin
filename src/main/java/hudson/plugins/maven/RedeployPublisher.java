@@ -27,7 +27,7 @@ import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.Util;
-import hudson.maven.reporters.MavenAbstractArtifactRecord;
+import hudson.plugins.maven.reporters.MavenAbstractArtifactRecord;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;

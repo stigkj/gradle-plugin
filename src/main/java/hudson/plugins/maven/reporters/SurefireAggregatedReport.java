@@ -23,19 +23,19 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.maven.MavenAggregatedReport;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenModuleSet;
-import hudson.maven.MavenModuleSetBuild;
+import java.util.List;
+import java.util.Map;
+
 import hudson.model.Action;
+import hudson.plugins.maven.MavenAggregatedReport;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenModuleSet;
+import hudson.plugins.maven.MavenModuleSetBuild;
+import hudson.tasks.junit.CaseResult;
 import hudson.tasks.test.AbstractTestResultAction;
 import hudson.tasks.test.AggregatedTestResultAction;
 import hudson.tasks.test.TestResultProjectAction;
-import hudson.tasks.junit.CaseResult;
-
-import java.util.List;
-import java.util.Map;
 
 /**
  * {@link MavenAggregatedReport} for surefire report.

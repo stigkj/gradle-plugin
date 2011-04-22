@@ -24,10 +24,10 @@
 package hudson.plugins.maven.reporters;
 
 import hudson.console.AnnotatedLargeText;
-import hudson.maven.MavenEmbedder;
-import hudson.maven.MavenEmbedderException;
-import hudson.maven.MavenUtil;
-import hudson.maven.RedeployPublisher.WrappedArtifactRepository;
+import hudson.plugins.maven.MavenEmbedder;
+import hudson.plugins.maven.MavenEmbedderException;
+import hudson.plugins.maven.MavenUtil;
+import hudson.plugins.maven.RedeployPublisher.WrappedArtifactRepository;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BallColor;

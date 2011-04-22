@@ -1,30 +1,5 @@
 package hudson.plugins.maven;
 
-import static hudson.Util.fixNull;
-import hudson.AbortException;
-import hudson.EnvVars;
-import hudson.FilePath;
-import hudson.Launcher;
-import hudson.Proc;
-import hudson.maven.ProcessCache.NewProcess;
-import hudson.model.BuildListener;
-import hudson.model.Computer;
-import hudson.model.Executor;
-import hudson.model.JDK;
-import hudson.model.Node;
-import hudson.model.TaskListener;
-import hudson.remoting.Callable;
-import hudson.remoting.Channel;
-import hudson.remoting.RemoteInputStream;
-import hudson.remoting.RemoteOutputStream;
-import hudson.remoting.SocketInputStream;
-import hudson.remoting.SocketOutputStream;
-import hudson.remoting.Which;
-import hudson.slaves.Channels;
-import hudson.tasks.Maven.MavenInstallation;
-import hudson.tasks._maven.MavenConsoleAnnotator;
-import hudson.util.ArgumentListBuilder;
-
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.IOException;
@@ -38,8 +13,31 @@ import java.nio.charset.Charset;
 import java.nio.charset.UnsupportedCharsetException;
 import java.util.Arrays;
 
-import org.jenkinsci.plugins.tokenmacro.TokenMacro;
+import hudson.AbortException;
+import hudson.EnvVars;
+import hudson.FilePath;
+import hudson.Launcher;
+import hudson.Proc;
+import hudson.model.BuildListener;
+import hudson.model.Computer;
+import hudson.model.Executor;
+import hudson.model.JDK;
+import hudson.model.Node;
+import hudson.model.TaskListener;
+import hudson.plugins.maven.ProcessCache.NewProcess;
+import hudson.remoting.Callable;
+import hudson.remoting.Channel;
+import hudson.remoting.RemoteInputStream;
+import hudson.remoting.RemoteOutputStream;
+import hudson.remoting.SocketInputStream;
+import hudson.remoting.SocketOutputStream;
+import hudson.remoting.Which;
+import hudson.slaves.Channels;
+import hudson.tasks.Maven.MavenInstallation;
+import hudson.tasks._maven.MavenConsoleAnnotator;
+import hudson.util.ArgumentListBuilder;
 import org.kohsuke.stapler.framework.io.IOException2;
+import static hudson.Util.fixNull;
 
 /*
  * The MIT License

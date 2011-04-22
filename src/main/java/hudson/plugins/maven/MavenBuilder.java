@@ -24,18 +24,6 @@
  */
 package hudson.plugins.maven;
 
-import hudson.maven.agent.AbortException;
-import hudson.maven.agent.Main;
-import hudson.maven.agent.PluginManagerListener;
-import hudson.maven.reporters.SurefireArchiver;
-import hudson.model.BuildListener;
-import hudson.model.Result;
-import hudson.remoting.Callable;
-import hudson.remoting.Channel;
-import hudson.remoting.DelegatingCallable;
-import hudson.remoting.Future;
-import hudson.util.IOException2;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.lang.reflect.InvocationTargetException;
@@ -46,6 +34,17 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+import hudson.maven.agent.AbortException;
+import hudson.maven.agent.Main;
+import hudson.maven.agent.PluginManagerListener;
+import hudson.model.BuildListener;
+import hudson.model.Result;
+import hudson.plugins.maven.reporters.SurefireArchiver;
+import hudson.remoting.Callable;
+import hudson.remoting.Channel;
+import hudson.remoting.DelegatingCallable;
+import hudson.remoting.Future;
+import hudson.util.IOException2;
 import org.apache.maven.BuildFailureException;
 import org.apache.maven.execution.MavenSession;
 import org.apache.maven.execution.ReactorManager;

@@ -23,15 +23,15 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.maven.AggregatableAction;
-import hudson.maven.MavenAggregatedReport;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenEmbedder;
-import hudson.maven.MavenEmbedderException;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenModuleSetBuild;
-import hudson.maven.MavenUtil;
-import hudson.maven.RedeployPublisher.WrappedArtifactRepository;
+import hudson.plugins.maven.AggregatableAction;
+import hudson.plugins.maven.MavenAggregatedReport;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenEmbedder;
+import hudson.plugins.maven.MavenEmbedderException;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenModuleSetBuild;
+import hudson.plugins.maven.MavenUtil;
+import hudson.plugins.maven.RedeployPublisher.WrappedArtifactRepository;
 import hudson.model.Action;
 import hudson.model.TaskListener;
 

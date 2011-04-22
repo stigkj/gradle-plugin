@@ -23,29 +23,29 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.maven.MavenBuildProxy;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenReporter;
-import hudson.maven.MavenReporterDescriptor;
-import hudson.maven.MojoInfo;
-import hudson.maven.MavenBuild;
-import hudson.model.BuildListener;
-import hudson.util.InvocationInterceptor;
-import hudson.FilePath;
-import hudson.Extension;
-import hudson.Util;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.project.MavenProject;
-
-import java.io.IOException;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.IOException;
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
-import java.util.HashSet;
-import java.lang.reflect.Method;
-import java.lang.reflect.InvocationHandler;
+
+import hudson.Extension;
+import hudson.FilePath;
+import hudson.Util;
+import hudson.model.BuildListener;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenBuildProxy;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenReporter;
+import hudson.plugins.maven.MavenReporterDescriptor;
+import hudson.plugins.maven.MojoInfo;
+import hudson.util.InvocationInterceptor;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.project.MavenProject;
 
 /**
  * Archives artifacts of the build.

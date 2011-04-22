@@ -23,14 +23,18 @@
  */
 package hudson.plugins.maven;
 
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import hudson.Extension;
 import hudson.Launcher;
-import hudson.maven.reporters.SurefireReport;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
 import hudson.model.Descriptor;
 import hudson.model.Saveable;
+import hudson.plugins.maven.reporters.SurefireReport;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Publisher;
@@ -38,13 +42,7 @@ import hudson.tasks.Recorder;
 import hudson.tasks.junit.TestDataPublisher;
 import hudson.tasks.junit.TestResultAction.Data;
 import hudson.util.DescribableList;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
 import net.sf.json.JSONObject;
-
 import org.kohsuke.stapler.StaplerRequest;
 
 /**

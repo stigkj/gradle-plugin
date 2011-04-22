@@ -23,13 +23,13 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.maven.MavenAggregatedReport;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenEmbedder;
-import hudson.maven.MavenEmbedderException;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenModuleSet;
-import hudson.maven.MavenModuleSetBuild;
+import hudson.plugins.maven.MavenAggregatedReport;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenEmbedder;
+import hudson.plugins.maven.MavenEmbedderException;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenModuleSet;
+import hudson.plugins.maven.MavenModuleSetBuild;
 import hudson.model.Action;
 import hudson.model.TaskListener;
 

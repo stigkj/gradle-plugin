@@ -23,17 +23,6 @@
  */
 package hudson.plugins.maven;
 
-import hudson.Launcher;
-import hudson.maven.MavenBuild.ProxyImpl2;
-import hudson.maven.util.ExecutionEventLogger;
-import hudson.model.BuildListener;
-import hudson.model.Hudson;
-import hudson.model.Result;
-import hudson.remoting.Channel;
-import hudson.remoting.DelegatingCallable;
-import hudson.remoting.Future;
-import hudson.util.IOException2;
-
 import java.io.IOException;
 import java.io.PrintStream;
 import java.io.Serializable;
@@ -45,12 +34,22 @@ import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.Map.Entry;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CopyOnWriteArrayList;
 import java.util.concurrent.ExecutionException;
 
+import hudson.Launcher;
+import hudson.model.BuildListener;
+import hudson.model.Hudson;
+import hudson.model.Result;
+import hudson.plugins.maven.MavenBuild.ProxyImpl2;
+import hudson.plugins.maven.util.ExecutionEventLogger;
+import hudson.remoting.Channel;
+import hudson.remoting.DelegatingCallable;
+import hudson.remoting.Future;
+import hudson.util.IOException2;
 import org.apache.maven.cli.PrintStreamLogger;
 import org.apache.maven.execution.AbstractExecutionListener;
 import org.apache.maven.execution.ExecutionEvent;

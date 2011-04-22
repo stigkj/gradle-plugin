@@ -23,18 +23,18 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.maven.MavenBuild;
-import hudson.maven.AggregatableAction;
-import hudson.maven.MavenAggregatedReport;
-import hudson.maven.MavenModuleSetBuild;
-import hudson.maven.MavenModule;
-import hudson.model.BuildListener;
-import hudson.model.Action;
-import hudson.tasks.junit.TestResult;
-import hudson.tasks.junit.TestResultAction;
-
 import java.util.List;
 import java.util.Map;
+
+import hudson.model.Action;
+import hudson.model.BuildListener;
+import hudson.plugins.maven.AggregatableAction;
+import hudson.plugins.maven.MavenAggregatedReport;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenModuleSetBuild;
+import hudson.tasks.junit.TestResult;
+import hudson.tasks.junit.TestResultAction;
 
 /**
  * {@link Action} that displays surefire test result.

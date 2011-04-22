@@ -23,6 +23,10 @@
  */
 package hudson.plugins.maven;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+
 import hudson.Extension;
 import hudson.FilePath;
 import hudson.maven.agent.AbortException;
@@ -33,11 +37,6 @@ import hudson.model.TaskListener;
 import hudson.remoting.Channel;
 import hudson.remoting.Which;
 import hudson.slaves.ComputerListener;
-
-import java.io.File;
-import java.io.IOException;
-import java.io.PrintStream;
-
 import org.apache.tools.ant.Project;
 import org.apache.tools.ant.taskdefs.Zip;
 import org.codehaus.plexus.classworlds.ClassWorld;

@@ -23,24 +23,6 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.Extension;
-import hudson.Util;
-import hudson.maven.Maven3Builder;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenBuildProxy;
-import hudson.maven.MavenBuildProxy.BuildCallable;
-import hudson.maven.MavenBuilder;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenProjectActionBuilder;
-import hudson.maven.MavenReporter;
-import hudson.maven.MavenReporterDescriptor;
-import hudson.maven.MojoInfo;
-import hudson.model.Action;
-import hudson.model.BuildListener;
-import hudson.model.Result;
-import hudson.tasks.junit.TestResult;
-import hudson.tasks.test.TestResultProjectAction;
-
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
@@ -53,6 +35,23 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
+import hudson.Extension;
+import hudson.Util;
+import hudson.model.Action;
+import hudson.model.BuildListener;
+import hudson.model.Result;
+import hudson.plugins.maven.Maven3Builder;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenBuildProxy;
+import hudson.plugins.maven.MavenBuildProxy.BuildCallable;
+import hudson.plugins.maven.MavenBuilder;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenProjectActionBuilder;
+import hudson.plugins.maven.MavenReporter;
+import hudson.plugins.maven.MavenReporterDescriptor;
+import hudson.plugins.maven.MojoInfo;
+import hudson.tasks.junit.TestResult;
+import hudson.tasks.test.TestResultProjectAction;
 import org.apache.commons.lang.StringUtils;
 import org.apache.maven.artifact.versioning.ComparableVersion;
 import org.apache.maven.plugin.MojoFailureException;

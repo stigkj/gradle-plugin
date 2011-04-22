@@ -23,30 +23,30 @@
  */
 package hudson.plugins.maven.reporters;
 
+import java.io.File;
+import java.io.IOException;
+import java.util.Collection;
+import java.util.Collections;
+
+import hudson.Extension;
 import hudson.FilePath;
 import hudson.Util;
-import hudson.Extension;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenBuildProxy;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenModuleSet;
-import hudson.maven.MavenReporter;
-import hudson.maven.MavenReporterDescriptor;
-import hudson.maven.MojoInfo;
-import hudson.maven.MavenBuildProxy.BuildCallable;
 import hudson.model.AbstractItem;
 import hudson.model.Action;
 import hudson.model.BuildListener;
 import hudson.model.DirectoryBrowserSupport;
 import hudson.model.ProminentProjectAction;
 import hudson.model.Result;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenBuildProxy;
+import hudson.plugins.maven.MavenBuildProxy.BuildCallable;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenModuleSet;
+import hudson.plugins.maven.MavenReporter;
+import hudson.plugins.maven.MavenReporterDescriptor;
+import hudson.plugins.maven.MojoInfo;
 import org.apache.maven.project.MavenProject;
 import org.codehaus.plexus.component.configurator.ComponentConfigurationException;
-
-import java.io.File;
-import java.io.IOException;
-import java.util.Collection;
-import java.util.Collections;
 
 /**
  * Watches out for the execution of maven-site-plugin and records its output.

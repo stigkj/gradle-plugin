@@ -25,10 +25,10 @@
 package hudson.plugins.maven.reporters;
 
 import hudson.Extension;
-import hudson.maven.MavenModule;
-import hudson.maven.MavenModuleSet;
-import hudson.maven.MavenReporterDescriptor;
-import hudson.maven.MojoInfo;
+import hudson.plugins.maven.MavenModule;
+import hudson.plugins.maven.MavenModuleSet;
+import hudson.plugins.maven.MavenReporterDescriptor;
+import hudson.plugins.maven.MojoInfo;
 import hudson.model.Action;
 
 import java.util.Collection;

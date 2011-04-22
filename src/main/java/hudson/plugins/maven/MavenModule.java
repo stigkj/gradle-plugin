@@ -26,7 +26,7 @@ package hudson.plugins.maven;
 import hudson.CopyOnWrite;
 import hudson.Util;
 import hudson.Functions;
-import hudson.maven.reporters.MavenMailer;
+import hudson.plugins.maven.reporters.MavenMailer;
 import hudson.model.AbstractProject;
 import hudson.model.Action;
 import hudson.model.DependencyGraph;

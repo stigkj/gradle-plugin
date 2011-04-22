@@ -23,17 +23,17 @@
  */
 package hudson.plugins.maven;
 
+import java.io.IOException;
+
+import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.Result;
+import hudson.plugins.maven.reporters.MavenArtifactRecord;
 import hudson.tasks.BuildStepDescriptor;
-import hudson.tasks.Notifier;
 import hudson.tasks.BuildStepMonitor;
-import hudson.Launcher;
-import hudson.maven.reporters.MavenArtifactRecord;
+import hudson.tasks.Notifier;
 import hudson.tasks.Publisher;
-
-import java.io.IOException;
 
 /**
  * {@link Publisher} for Maven projects to deploy artifacts to a Maven repository

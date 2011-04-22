@@ -23,29 +23,26 @@
  */
 package hudson.plugins.maven.reporters;
 
-import hudson.FilePath;
-import hudson.Util;
-import hudson.maven.MavenBuild;
-import hudson.maven.MavenBuildProxy;
-import hudson.model.BuildListener;
-import hudson.model.FingerprintMap;
-import hudson.model.Hudson;
-
-import org.apache.maven.RepositoryUtils;
-import org.apache.maven.artifact.Artifact;
-import org.apache.maven.artifact.factory.ArtifactFactory;
-import org.apache.maven.artifact.handler.ArtifactHandler;
-import org.apache.maven.artifact.handler.DefaultArtifactHandler;
-import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
-
-import com.google.common.collect.Maps;
-
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.Map;
 import java.util.logging.Logger;
+
+import com.google.common.collect.Maps;
+import hudson.FilePath;
+import hudson.Util;
+import hudson.model.BuildListener;
+import hudson.model.FingerprintMap;
+import hudson.model.Hudson;
+import hudson.plugins.maven.MavenBuild;
+import hudson.plugins.maven.MavenBuildProxy;
+import org.apache.maven.artifact.Artifact;
+import org.apache.maven.artifact.factory.ArtifactFactory;
+import org.apache.maven.artifact.handler.ArtifactHandler;
+import org.apache.maven.artifact.handler.DefaultArtifactHandler;
+import org.apache.maven.artifact.handler.manager.ArtifactHandlerManager;
 
 /**
  * Captures information about an artifact created by Maven and archived by
