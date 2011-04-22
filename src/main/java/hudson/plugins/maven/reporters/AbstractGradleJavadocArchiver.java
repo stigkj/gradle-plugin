@@ -49,7 +49,7 @@ import org.codehaus.plexus.component.configurator.ComponentConfigurationExceptio
  * 
  * @author Kohsuke Kawaguchi
  */
-public abstract class AbstractMavenJavadocArchiver extends MavenReporter {
+public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
 
 
     private boolean aggregated = false;

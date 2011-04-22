@@ -39,7 +39,7 @@ import java.util.Collections;
  * 
  * @author Kohsuke Kawaguchi
  */
-public class MavenTestJavadocArchiver extends AbstractMavenJavadocArchiver {
+public class GradleTestJavadocArchiver extends AbstractGradleJavadocArchiver {
 
 
     public Collection<? extends Action> getProjectActions(MavenModule project) {
@@ -69,8 +69,8 @@ public class MavenTestJavadocArchiver extends AbstractMavenJavadocArchiver {
             return Messages.MavenTestJavadocArchiver_DisplayName();
         }
 
-        public MavenTestJavadocArchiver newAutoInstance(MavenModule module) {
-            return new MavenTestJavadocArchiver();
+        public GradleTestJavadocArchiver newAutoInstance(MavenModule module) {
+            return new GradleTestJavadocArchiver();
         }
     }
 

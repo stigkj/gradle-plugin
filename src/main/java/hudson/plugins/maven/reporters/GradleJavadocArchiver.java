@@ -39,7 +39,7 @@ import hudson.plugins.maven.MojoInfo;
  * 
  * @author Kohsuke Kawaguchi
  */
-public class MavenJavadocArchiver extends AbstractMavenJavadocArchiver {
+public class GradleJavadocArchiver extends AbstractGradleJavadocArchiver {
 
 
     public Collection<? extends Action> getProjectActions(MavenModule project) {
@@ -69,8 +69,8 @@ public class MavenJavadocArchiver extends AbstractMavenJavadocArchiver {
             return Messages.MavenJavadocArchiver_DisplayName();
         }
 
-        public MavenJavadocArchiver newAutoInstance(MavenModule module) {
-            return new MavenJavadocArchiver();
+        public GradleJavadocArchiver newAutoInstance(MavenModule module) {
+            return new GradleJavadocArchiver();
         }
     }
 
