@@ -33,5 +33,6 @@ public class PluginImpl extends Plugin {
     public void start() throws Exception {
         super.start();
 
+        // FIXME do we need this class at all
     }
 }
