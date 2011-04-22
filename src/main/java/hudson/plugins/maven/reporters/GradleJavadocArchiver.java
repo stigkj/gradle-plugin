@@ -58,7 +58,7 @@ public class GradleJavadocArchiver extends AbstractGradleJavadocArchiver {
     }
 
     @Override
-    public boolean checkIsJavadocMojo(MojoInfo mojo) {
+    public boolean checkIsJavadocTask(MojoInfo mojo) {
         return mojo.is("org.apache.maven.plugins","maven-javadoc-plugin","javadoc")
             || mojo.is("org.apache.maven.plugins","maven-javadoc-plugin","aggregate");
     }

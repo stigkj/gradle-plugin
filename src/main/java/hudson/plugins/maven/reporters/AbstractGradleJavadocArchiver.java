@@ -50,24 +50,23 @@ import org.codehaus.plexus.component.configurator.ComponentConfigurationExceptio
  * @author Kohsuke Kawaguchi
  */
 public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
-
-
     private boolean aggregated = false;
-
     private FilePath target;
-
 
     /**
      * return true if this mojo is a javadoc one sources or test sources
      * @param mojo
      * @return
      */
-    public abstract boolean checkIsJavadocMojo(MojoInfo mojo);
+    // TODO should this be task? Or plugin?
+    public abstract boolean checkIsJavadocTask(MojoInfo mojo);
 
     public abstract String getArchiveTargetPath();
 
     public boolean postExecute(MavenBuildProxy build, MavenProject pom, MojoInfo mojo, BuildListener listener, Throwable error) throws InterruptedException, IOException {
-        if (!checkIsJavadocMojo(mojo)) return true;
+        if (!checkIsJavadocTask(mojo)) {
+            return true;
+        }
 
         File destDir;
         try {
