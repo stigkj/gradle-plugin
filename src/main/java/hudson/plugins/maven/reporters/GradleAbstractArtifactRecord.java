@@ -72,7 +72,7 @@ import org.kohsuke.stapler.StaplerResponse;
  *
  * @author Kohsuke Kawaguchi
  */
-public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?, ?>> extends TaskAction implements BuildBadgeAction {
+public abstract class GradleAbstractArtifactRecord<T extends AbstractBuild<?, ?>> extends TaskAction implements BuildBadgeAction {
     public final class Record {
         /**
          * Repository URL that artifacts were deployed.
@@ -238,9 +238,9 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?, ?>>
      */
     public abstract void deploy(MavenEmbedder embedder, ArtifactRepository deploymentRepository, TaskListener listener) throws MavenEmbedderException, IOException, ComponentLookupException, ArtifactDeploymentException;
 
-    private final class HistoryWidgetImpl extends HistoryWidget<MavenAbstractArtifactRecord, Record> {
+    private final class HistoryWidgetImpl extends HistoryWidget<GradleAbstractArtifactRecord, Record> {
         private HistoryWidgetImpl() {
-            super(MavenAbstractArtifactRecord.this, Iterators.reverse(records), ADAPTER);
+            super(GradleAbstractArtifactRecord.this, Iterators.reverse(records), ADAPTER);
         }
 
         public String getDisplayName() {
@@ -248,16 +248,16 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?, ?>>
         }
     }
 
-    private static final Adapter<MavenAbstractArtifactRecord<?>.Record> ADAPTER = new Adapter<MavenAbstractArtifactRecord<?>.Record>() {
-        public int compare(MavenAbstractArtifactRecord<?>.Record record, String key) {
+    private static final Adapter<GradleAbstractArtifactRecord<?>.Record> ADAPTER = new Adapter<GradleAbstractArtifactRecord<?>.Record>() {
+        public int compare(GradleAbstractArtifactRecord<?>.Record record, String key) {
             return record.getNumber() - Integer.parseInt(key);
         }
 
-        public String getKey(MavenAbstractArtifactRecord<?>.Record record) {
+        public String getKey(GradleAbstractArtifactRecord<?>.Record record) {
             return String.valueOf(record.getNumber());
         }
 
-        public boolean isBuilding(MavenAbstractArtifactRecord<?>.Record record) {
+        public boolean isBuilding(GradleAbstractArtifactRecord<?>.Record record) {
             return record.isBuilding();
         }
 
@@ -274,5 +274,5 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?, ?>>
     /**
      * Debug probe for HUDSON-1461.
      */
-    public static boolean debug = Boolean.getBoolean(MavenArtifactRecord.class.getName() + ".debug");
+    public static boolean debug = Boolean.getBoolean(GradleArtifactRecord.class.getName() + ".debug");
 }

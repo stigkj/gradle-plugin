@@ -59,7 +59,7 @@ import org.codehaus.plexus.component.repository.exception.ComponentLookupExcepti
  * @author Kohsuke Kawaguchi
  * @see MavenArtifactArchiver
  */
-public class MavenArtifactRecord extends MavenAbstractArtifactRecord<MavenBuild> implements AggregatableAction {
+public class GradleArtifactRecord extends GradleAbstractArtifactRecord<MavenBuild> implements AggregatableAction {
     /**
      * The build to which this record belongs.
      */
@@ -82,7 +82,7 @@ public class MavenArtifactRecord extends MavenAbstractArtifactRecord<MavenBuild>
      */
     public final List<MavenArtifact> attachedArtifacts;
 
-    public MavenArtifactRecord(MavenBuild parent, MavenArtifact pomArtifact, MavenArtifact mainArtifact, List<MavenArtifact> attachedArtifacts) {
+    public GradleArtifactRecord(MavenBuild parent, MavenArtifact pomArtifact, MavenArtifact mainArtifact, List<MavenArtifact> attachedArtifacts) {
         assert parent!=null;
         assert pomArtifact!=null;
         assert attachedArtifacts!=null;
@@ -103,7 +103,7 @@ public class MavenArtifactRecord extends MavenAbstractArtifactRecord<MavenBuild>
     }
 
     public MavenAggregatedReport createAggregatedAction(MavenModuleSetBuild build, Map<MavenModule, List<MavenBuild>> moduleBuilds) {
-        return new MavenAggregatedArtifactRecord(build);
+        return new GradleAggregatedArtifactRecord(build);
     }
 
     @Override

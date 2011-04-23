@@ -27,7 +27,7 @@ import hudson.Extension;
 import hudson.FilePath;
 import hudson.Launcher;
 import hudson.Util;
-import hudson.plugins.maven.reporters.MavenAbstractArtifactRecord;
+import hudson.plugins.maven.reporters.GradleAbstractArtifactRecord;
 import hudson.model.AbstractBuild;
 import hudson.model.AbstractProject;
 import hudson.model.BuildListener;
@@ -115,7 +115,7 @@ public class RedeployPublisher extends Recorder {
             return true;
         }
 
-        List<MavenAbstractArtifactRecord> mars = getActions( build, listener );
+        List<GradleAbstractArtifactRecord> mars = getActions( build, listener );
         if(mars==null || mars.isEmpty()) {
             listener.getLogger().println("No artifacts are recorded. Is this a Maven project?");
             build.setResult(Result.FAILURE);
@@ -135,7 +135,7 @@ public class RedeployPublisher extends Recorder {
             final ArtifactRepository repository = factory.createDeploymentArtifactRepository(
                     id, url, layout, uniqueVersion);
             WrappedArtifactRepository repo = new WrappedArtifactRepository(repository,uniqueVersion);
-            for (MavenAbstractArtifactRecord mar : mars)
+            for (GradleAbstractArtifactRecord mar : mars)
                 mar.deploy(embedder,repo,listener);
 
             return true;
@@ -237,21 +237,21 @@ public class RedeployPublisher extends Recorder {
     
     
     /**
-     * Obtains the {@link MavenAbstractArtifactRecord} that we'll work on.
+     * Obtains the {@link GradleAbstractArtifactRecord} that we'll work on.
      * <p>
      * This allows promoted-builds plugin to reuse the code for delayed deployment. 
      */
-    protected MavenAbstractArtifactRecord getAction(AbstractBuild<?, ?> build) {
-        return build.getAction(MavenAbstractArtifactRecord.class);
+    protected GradleAbstractArtifactRecord getAction(AbstractBuild<?, ?> build) {
+        return build.getAction(GradleAbstractArtifactRecord.class);
     }
     
-    protected List<MavenAbstractArtifactRecord> getActions(AbstractBuild<?, ?> build, BuildListener listener) {
-        List<MavenAbstractArtifactRecord> actions = new ArrayList<MavenAbstractArtifactRecord>();
+    protected List<GradleAbstractArtifactRecord> getActions(AbstractBuild<?, ?> build, BuildListener listener) {
+        List<GradleAbstractArtifactRecord> actions = new ArrayList<GradleAbstractArtifactRecord>();
         if (!(build instanceof MavenModuleSetBuild)) {
             return actions;
         }
         for (Entry<MavenModule, MavenBuild> e : ((MavenModuleSetBuild)build).getModuleLastBuilds().entrySet()) {
-            MavenAbstractArtifactRecord a = e.getValue().getAction( MavenAbstractArtifactRecord.class );
+            GradleAbstractArtifactRecord a = e.getValue().getAction( GradleAbstractArtifactRecord.class );
             if (a == null) {
                 listener.getLogger().println("No artifacts are recorded for module" + e.getKey().getName() + ". Is this a Maven project?");
             } else {

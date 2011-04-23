@@ -46,10 +46,10 @@ import org.codehaus.plexus.component.repository.exception.ComponentLookupExcepti
  * 
  * @author Kohsuke Kawaguchi
  */
-public class MavenAggregatedArtifactRecord extends MavenAbstractArtifactRecord<MavenModuleSetBuild> implements MavenAggregatedReport {
+public class GradleAggregatedArtifactRecord extends GradleAbstractArtifactRecord<MavenModuleSetBuild> implements MavenAggregatedReport {
     public final MavenModuleSetBuild parent;
 
-    public MavenAggregatedArtifactRecord(MavenModuleSetBuild build) {
+    public GradleAggregatedArtifactRecord(MavenModuleSetBuild build) {
         this.parent = build;
     }
 
@@ -60,8 +60,8 @@ public class MavenAggregatedArtifactRecord extends MavenAbstractArtifactRecord<M
     public void update(Map<MavenModule,List<MavenBuild>> moduleBuilds, MavenBuild newBuild) {
     }
 
-    public Class<MavenArtifactRecord> getIndividualActionType() {
-        return MavenArtifactRecord.class;
+    public Class<GradleArtifactRecord> getIndividualActionType() {
+        return GradleArtifactRecord.class;
     }
 
     public Action getProjectAction(MavenModuleSet moduleSet) {
@@ -73,7 +73,7 @@ public class MavenAggregatedArtifactRecord extends MavenAbstractArtifactRecord<M
             listener.getLogger().println("Redeploying artifacts of "+parent+" timestamp="+parent.getTimestamp());
 
         for (MavenBuild build : parent.getModuleLastBuilds().values()) {
-            MavenArtifactRecord mar = build.getAction(MavenArtifactRecord.class);
+            GradleArtifactRecord mar = build.getAction(GradleArtifactRecord.class);
             if(mar!=null) {
                 if(debug)
                     listener.getLogger().println("Deploying module: "+build+" timestamp="+build.getTimestamp());

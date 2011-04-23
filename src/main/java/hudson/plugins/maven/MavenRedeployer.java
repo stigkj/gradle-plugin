@@ -29,7 +29,7 @@ import hudson.Launcher;
 import hudson.model.AbstractBuild;
 import hudson.model.BuildListener;
 import hudson.model.Result;
-import hudson.plugins.maven.reporters.MavenArtifactRecord;
+import hudson.plugins.maven.reporters.GradleArtifactRecord;
 import hudson.tasks.BuildStepDescriptor;
 import hudson.tasks.BuildStepMonitor;
 import hudson.tasks.Notifier;
@@ -48,7 +48,7 @@ import hudson.tasks.Publisher;
  */
 public class MavenRedeployer extends Notifier {
     public boolean perform(AbstractBuild<?,?> build, Launcher launcher, BuildListener listener) throws InterruptedException, IOException {
-        MavenArtifactRecord mar = build.getAction(MavenArtifactRecord.class);
+        GradleArtifactRecord mar = build.getAction(GradleArtifactRecord.class);
         if(mar==null) {
             if(build.getResult().isBetterThan(Result.FAILURE)) {
                 listener.getLogger().println("There's no record of artifact information. Is this really a Maven build?");
