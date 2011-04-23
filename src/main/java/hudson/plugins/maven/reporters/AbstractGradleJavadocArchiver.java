@@ -63,7 +63,9 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
 
     public abstract String getArchiveTargetPath();
 
-    public boolean postExecute(MavenBuildProxy build, MavenProject pom, MojoInfo mojo, BuildListener listener, Throwable error) throws InterruptedException, IOException {
+    public boolean postExecute(MavenBuildProxy build, MavenProject pom, MojoInfo mojo, BuildListener listener,
+                               // FIXME add javax.annotation.Nullable/NotNullable etc to classpath and use it throughout
+                               /*@Nullable*/ Throwable error) throws InterruptedException, IOException {
         if (!checkIsJavadocTask(mojo)) {
             return true;
         }
