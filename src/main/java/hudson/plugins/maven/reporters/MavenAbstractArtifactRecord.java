@@ -72,17 +72,17 @@ import org.kohsuke.stapler.StaplerResponse;
  *
  * @author Kohsuke Kawaguchi
  */
-public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> extends TaskAction implements BuildBadgeAction {
+public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?, ?>> extends TaskAction implements BuildBadgeAction {
     public final class Record {
         /**
          * Repository URL that artifacts were deployed.
          */
-        public final String url;
+        public final String repositoryUrl;
 
         /**
          * Log file name. Relative to {@link AbstractBuild#getRootDir()}.
          */
-        private final String fileName;
+        private final String logFileName;
 
         /**
          * Status of this record.
@@ -91,9 +91,9 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
 
         private final Calendar timeStamp;
 
-        public Record(String url, String fileName) {
-            this.url = url;
-            this.fileName = fileName;
+        public Record(String repositoryUrl, String logFileName) {
+            this.repositoryUrl = repositoryUrl;
+            this.logFileName = logFileName;
             timeStamp = new GregorianCalendar();
         }
 
@@ -101,7 +101,7 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
          * Returns the log of this deployment record.
          */
         public AnnotatedLargeText getLog() {
-            return new AnnotatedLargeText<Record>(new File(getBuild().getRootDir(),fileName), Charset.defaultCharset(), true, this);
+            return new AnnotatedLargeText<Record>(new File(getBuild().getRootDir(), logFileName), Charset.defaultCharset(), true, this);
         }
 
         /**
@@ -116,7 +116,7 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
         }
 
         public boolean isBuilding() {
-            return result==null;
+            return result == null;
         }
 
         public Calendar getTimestamp() {
@@ -128,7 +128,7 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
         }
 
         public BallColor getIconColor() {
-            if(result==null)
+            if (result == null)
                 return BallColor.GREY_ANIME;
             else
                 return result.color;
@@ -137,7 +137,7 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
         // TODO: Eventually provide a better UI
         public void doIndex(StaplerResponse rsp) throws IOException {
             rsp.setContentType("text/plain;charset=UTF-8");
-            getLog().writeLogTo(0,rsp.getWriter());
+            getLog().writeLogTo(0, rsp.getWriter());
         }
     }
 
@@ -174,7 +174,7 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
     public boolean hasBadge() {
         if (records != null) {
             for (final Record record : records) {
-                if (Result.SUCCESS.equals(record.result)) 
+                if (Result.SUCCESS.equals(record.result))
                     return true;
             }
         }
@@ -198,27 +198,27 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
             @QueryParameter("_.uniqueVersion") final boolean uniqueVersion) throws ServletException, IOException {
         getACL().checkPermission(REDEPLOY);
 
-        File logFile = new File(getBuild().getRootDir(),"maven-deployment."+records.size()+".log");
+        File logFile = new File(getBuild().getRootDir(), "maven-deployment." + records.size() + ".log");
         final Record record = new Record(repositoryUrl, logFile.getName());
         records.add(record);
 
-        new TaskThread(this,ListenerAndText.forFile(logFile)) {
+        new TaskThread(this, ListenerAndText.forFile(logFile)) {
             protected void perform(TaskListener listener) throws Exception {
                 try {
-                    MavenEmbedder embedder = MavenUtil.createEmbedder(listener,getBuild());
+                    MavenEmbedder embedder = MavenUtil.createEmbedder(listener, getBuild());
                     ArtifactRepositoryLayout layout =
-                        (ArtifactRepositoryLayout) embedder.lookup( ArtifactRepositoryLayout.class,"default");
+                            (ArtifactRepositoryLayout) embedder.lookup(ArtifactRepositoryLayout.class, "default");
                     ArtifactRepositoryFactory factory =
-                        (ArtifactRepositoryFactory) embedder.lookup(ArtifactRepositoryFactory.ROLE);
+                            (ArtifactRepositoryFactory) embedder.lookup(ArtifactRepositoryFactory.ROLE);
 
                     ArtifactRepository repository = factory.createDeploymentArtifactRepository(
                             id, repositoryUrl, layout, uniqueVersion);
                     WrappedArtifactRepository repo = new WrappedArtifactRepository(repository, uniqueVersion);
-                    deploy(embedder,repo,listener);
+                    deploy(embedder, repo, listener);
 
                     record.result = Result.SUCCESS;
                 } finally {
-                    if(record.result==null)
+                    if (record.result == null)
                         record.result = Result.FAILURE;
                     // persist the record
                     getBuild().save();
@@ -232,16 +232,13 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
     /**
      * Deploys the artifacts to the specified {@link ArtifactRepository}.
      *
-     * @param embedder
-     *      This component hosts all the Maven components we need to do the work.
-     * @param deploymentRepository
-     *      The remote repository to deploy to.
-     * @param listener
-     *      The status and error goes to this listener.
+     * @param embedder This component hosts all the Maven components we need to do the work.
+     * @param deploymentRepository The remote repository to deploy to.
+     * @param listener The status and error goes to this listener.
      */
     public abstract void deploy(MavenEmbedder embedder, ArtifactRepository deploymentRepository, TaskListener listener) throws MavenEmbedderException, IOException, ComponentLookupException, ArtifactDeploymentException;
 
-    private final class HistoryWidgetImpl extends HistoryWidget<MavenAbstractArtifactRecord,Record> {
+    private final class HistoryWidgetImpl extends HistoryWidget<MavenAbstractArtifactRecord, Record> {
         private HistoryWidgetImpl() {
             super(MavenAbstractArtifactRecord.this, Iterators.reverse(records), ADAPTER);
         }
@@ -253,7 +250,7 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
 
     private static final Adapter<MavenAbstractArtifactRecord<?>.Record> ADAPTER = new Adapter<MavenAbstractArtifactRecord<?>.Record>() {
         public int compare(MavenAbstractArtifactRecord<?>.Record record, String key) {
-            return record.getNumber()-Integer.parseInt(key);
+            return record.getNumber() - Integer.parseInt(key);
         }
 
         public String getKey(MavenAbstractArtifactRecord<?>.Record record) {
@@ -265,10 +262,9 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
         }
 
         public String getNextKey(String key) {
-            return String.valueOf(Integer.parseInt(key)+1);
+            return String.valueOf(Integer.parseInt(key) + 1);
         }
     };
-
 
     /**
      * Permission for redeploying artifacts.
@@ -278,5 +274,5 @@ public abstract class MavenAbstractArtifactRecord<T extends AbstractBuild<?,?>> 
     /**
      * Debug probe for HUDSON-1461.
      */
-    public static boolean debug = Boolean.getBoolean(MavenArtifactRecord.class.getName()+".debug");
+    public static boolean debug = Boolean.getBoolean(MavenArtifactRecord.class.getName() + ".debug");
 }
