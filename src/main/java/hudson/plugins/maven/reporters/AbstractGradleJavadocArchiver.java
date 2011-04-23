@@ -70,6 +70,7 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
 
         File destDir;
         try {
+            // TODO probably use the "javadoc" task's config for these settings; hardcode first?
             aggregated = mojo.getConfigurationValue("aggregate",Boolean.class) || mojo.getGoal().equals("aggregate")
                             || mojo.getGoal().equals("test-aggregate");
             if(aggregated && !pom.isExecutionRoot())
@@ -87,11 +88,11 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
         if(destDir.exists()) {
             // javadoc:javadoc just skips itself when the current project is not a java project
             if(aggregated) {
-                // store at MavenModuleSet level. 
+                // store at MavenModuleSet level.
+                // TODO why is [JENKINS] here?
                 listener.getLogger().println("[JENKINS] Archiving aggregated javadoc");
                 target = build.getModuleSetRootDir();
             } else {
-
                 listener.getLogger().println("[JENKINS] Archiving  javadoc");
                 target = build.getProjectRootDir();
             }
@@ -115,15 +116,15 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
             if  (pom.getModules() != null &&  pom.getModules().isEmpty() && pom.isExecutionRoot() ) {
                 build.registerAsAggregatedProjectAction(this);
             }
-
         }
 
         return true;
     }
 
     @Override
-    public boolean reportGenerated(MavenBuildProxy build, MavenProject pom, MavenReportInfo report, BuildListener listener) throws InterruptedException, IOException {
-        return postExecute(build,pom,report,listener,null);
+    public boolean reportGenerated(MavenBuildProxy build, MavenProject pom, MavenReportInfo report,
+                                   BuildListener listener) throws InterruptedException, IOException {
+        return postExecute(build, pom, report, listener, null);
     }
 
     public abstract Collection<? extends Action> getProjectActions(MavenModule project);
@@ -141,7 +142,8 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
         private final String urlName;
         private final String displayName;
 
-        public MavenJavadocAction(AbstractItem project,FilePath target, String title,String urlName,String displayName) {
+        public MavenJavadocAction(AbstractItem project, FilePath target,
+                                  String title, String urlName, String displayName) {
             super(project);
             this.abstractItem = project;
             this.target = target;
@@ -152,16 +154,16 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
 
         public String getDisplayName() {
             File dir = dir();
+
             if (dir != null && new File(dir, "help-doc.html").exists())
                 return this.displayName;
             else
                 return hudson.tasks.Messages.JavadocArchiver_DisplayName_Generic();
         }
 
-
         @Override
         protected String getTitle() {
-            return abstractItem.getDisplayName()+ " "+title;
+            return abstractItem.getDisplayName() + " " + title;
         }
 
         @Override
@@ -173,9 +175,7 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
         protected File dir() {
             return target == null ? null : new File(target.getRemote());
         }
-
     }
-
 
     private static final long serialVersionUID = 1L;
 }
