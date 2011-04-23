@@ -27,6 +27,7 @@ package hudson.plugins.maven.reporters;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.Collections;
 
 import hudson.FilePath;
 import hudson.Util;
@@ -129,13 +130,24 @@ public abstract class AbstractGradleJavadocArchiver extends MavenReporter {
         return postExecute(build, pom, report, listener, null);
     }
 
-    public abstract Collection<? extends Action> getProjectActions(MavenModule project);
+    public Collection<? extends Action> getProjectActions(MavenModule project) {
+        return Collections.singletonList(
+                new MavenJavadocAction(project, getTarget(), getTitle(), getUrlName(), getDisplayName()));
+    }
 
-    public abstract Action getAggregatedProjectAction(MavenModuleSet project);
+    public Action getAggregatedProjectAction(MavenModuleSet project) {
+        return new MavenJavadocAction(project, getTarget(), getTitle(), getUrlName(), getDisplayName());
+    }
 
     public FilePath getTarget() {
         return target;
     }
+
+    protected abstract String getTitle();
+
+    protected abstract String getUrlName();
+
+    protected abstract String getDisplayName();
 
     protected static class MavenJavadocAction extends JavadocAction {
         private final AbstractItem abstractItem;

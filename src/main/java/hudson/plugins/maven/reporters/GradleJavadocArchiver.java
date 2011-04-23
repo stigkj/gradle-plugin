@@ -24,27 +24,30 @@
  */
 package hudson.plugins.maven.reporters;
 
-import java.util.Collection;
-import java.util.Collections;
-
 import hudson.Extension;
-import hudson.model.Action;
 import hudson.plugins.maven.MavenModule;
-import hudson.plugins.maven.MavenModuleSet;
 import hudson.plugins.maven.MavenReporterDescriptor;
 import hudson.plugins.maven.MojoInfo;
 
 /**
- * Records the javadoc and archives it.
+ * Records the javadoc for the main classes and archives it.
  * 
  * @author Kohsuke Kawaguchi
  */
 public class GradleJavadocArchiver extends AbstractGradleJavadocArchiver {
+    @Override
+    protected String getTitle() {
+        return "Javadoc";
+    }
 
+    @Override
+    protected String getUrlName() {
+        return "javadoc";
+    }
 
-    public Collection<? extends Action> getProjectActions(MavenModule project) {
-        return Collections.singletonList(new MavenJavadocAction(project,getTarget(),"Javadoc","javadoc"
-                ,hudson.tasks.Messages.JavadocArchiver_DisplayName_Javadoc()));
+    @Override
+    protected String getDisplayName() {
+        return hudson.tasks.Messages.JavadocArchiver_DisplayName_Javadoc();
     }
 
     @Override
@@ -52,15 +55,10 @@ public class GradleJavadocArchiver extends AbstractGradleJavadocArchiver {
         return "javadoc";
     }
 
-    public Action getAggregatedProjectAction(MavenModuleSet project) {
-        return new MavenJavadocAction(project,getTarget(),"Javadoc","javadoc"
-                ,hudson.tasks.Messages.JavadocArchiver_DisplayName_Javadoc());
-    }
-
     @Override
     public boolean checkIsJavadocTask(MojoInfo mojo) {
-        return mojo.is("org.apache.maven.plugins","maven-javadoc-plugin","javadoc")
-            || mojo.is("org.apache.maven.plugins","maven-javadoc-plugin","aggregate");
+        return mojo.is("org.apache.maven.plugins", "maven-javadoc-plugin", "javadoc")
+            || mojo.is("org.apache.maven.plugins", "maven-javadoc-plugin", "aggregate");
     }
 
     @Extension

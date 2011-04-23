@@ -35,16 +35,24 @@ import java.util.Collection;
 import java.util.Collections;
 
 /**
- * Records the javadoc and archives it.
+ * Records the javadoc for the test classes and archives it.
  * 
  * @author Kohsuke Kawaguchi
  */
 public class GradleTestJavadocArchiver extends AbstractGradleJavadocArchiver {
+    @Override
+    protected String getTitle() {
+        return "Test Javadoc";
+    }
 
+    @Override
+    protected String getUrlName() {
+        return "test-javadoc";
+    }
 
-    public Collection<? extends Action> getProjectActions(MavenModule project) {
-        return Collections.singletonList(new MavenJavadocAction(project,getTarget(),"Test Javadoc","test-javadoc"
-        ,hudson.tasks.Messages.TestJavadocArchiver_DisplayName_Javadoc()));
+    @Override
+    protected String getDisplayName() {
+        return hudson.tasks.Messages.TestJavadocArchiver_DisplayName_Javadoc();
     }
 
     @Override
@@ -52,15 +60,10 @@ public class GradleTestJavadocArchiver extends AbstractGradleJavadocArchiver {
         return "test-javadoc";
     }
 
-    public Action getAggregatedProjectAction(MavenModuleSet project) {
-        return new MavenJavadocAction(project,getTarget(),"Test Javadoc","test-javadoc"
-            ,hudson.tasks.Messages.TestJavadocArchiver_DisplayName_Javadoc());
-    }
-
     @Override
     public boolean checkIsJavadocTask(MojoInfo mojo) {
-        return mojo.is("org.apache.maven.plugins","maven-javadoc-plugin","test-javadoc")
-            || mojo.is("org.apache.maven.plugins","maven-javadoc-plugin","test-aggregate");
+        return mojo.is("org.apache.maven.plugins", "maven-javadoc-plugin", "test-javadoc")
+            || mojo.is("org.apache.maven.plugins", "maven-javadoc-plugin", "test-aggregate");
     }
 
     @Extension
