@@ -49,7 +49,8 @@ import org.codehaus.plexus.configuration.xml.XmlPlexusConfiguration;
  * @author Kohsuke Kawaguchi
  */
 public class BuildInfoRecorder extends MavenReporter {
-
+    // FIXME exchange these with Gradle tasks for the same? Might be the plugin name is needed too to make sure
+    // it is not just another task with the same name
     private static final Set<String> keys = new HashSet<String>(Arrays.asList(
         "maven-jar-plugin:jar",
         "maven-jar-plugin:test-jar",
@@ -58,9 +59,10 @@ public class BuildInfoRecorder extends MavenReporter {
     ));
 
     public boolean preExecute(MavenBuildProxy build, MavenProject pom, MojoInfo mojo, BuildListener listener) throws InterruptedException, IOException {
+        // TODO just check that the current Gradle task is one of the supported ones in the list over
         if(mojo.pluginName.groupId.equals("org.apache.maven.plugins")
         && keys.contains(mojo.pluginName.artifactId+':'+mojo.getGoal())) {
-            // touch <archive><manifestEntries><Build-Numer>#n
+            // touch <archive><manifestEntries><Build-Number>#n
 
             Map<String,String> props = build.execute(new BuildCallable<Map<String,String>,IOException>() {
                 public Map<String,String> call(MavenBuild build) throws IOException, InterruptedException {
@@ -76,6 +78,7 @@ public class BuildInfoRecorder extends MavenReporter {
                 }
             });
 
+            // TODO use the jar task to set the entries in MANIFEST.MF from variable props over
             PlexusConfiguration archive = mojo.configuration.getChild("archive");
             PlexusConfiguration manifestEntries = archive.getChild("manifestEntries",true);
             for (Entry<String,String> e : props.entrySet()) {
